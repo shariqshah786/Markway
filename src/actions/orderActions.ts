@@ -4,7 +4,7 @@ import dbConnect from "@/lib/mongodb";
 import Order from "@/models/Order";
 import { revalidatePath } from "next/cache";
 
-export async function createOrder(orderData: any) {
+export async function createOrder(orderData: { customer: { name: string, email: string, phone: string, address: { street: string, city: string, state: string, country: string, zip: string } }, items: Array<{ id: string, name: string, price: number, quantity: number, color?: string }>, totalAmount: number, paymentMethod?: string }) {
   try {
     await dbConnect();
     
@@ -15,7 +15,7 @@ export async function createOrder(orderData: any) {
         phone: orderData.customer.phone,
         address: orderData.customer.address,
       },
-      items: orderData.items.map((item: any) => ({
+      items: orderData.items.map((item) => ({
         product: item.id,
         name: item.name,
         price: item.price,

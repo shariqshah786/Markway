@@ -1,11 +1,23 @@
 import { getOrders } from "@/actions/orderActions";
 import { getProducts } from "@/actions/productActions";
+import Link from "next/link";
+
+interface Order {
+  _id: string;
+  customer: {
+    name: string;
+    email: string;
+  };
+  totalAmount: number;
+  status: string;
+  createdAt: string;
+}
 
 export default async function AdminDashboard() {
-  const orders = await getOrders();
+  const orders: Order[] = await getOrders();
   const products = await getProducts();
 
-  const totalRevenue = orders.reduce((acc: number, order: any) => acc + order.totalAmount, 0);
+  const totalRevenue = orders.reduce((acc: number, order: Order) => acc + order.totalAmount, 0);
   const totalOrders = orders.length;
   const activeProducts = products.length;
 
@@ -13,7 +25,6 @@ export default async function AdminDashboard() {
     <div>
       <h1 className="text-3xl font-heading font-semibold text-charcoal mb-8">Dashboard Overview</h1>
       
-      {/* KPI Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
         <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
           <h3 className="text-xs font-bold uppercase tracking-widest text-slate mb-2">Total Revenue</h3>
@@ -32,7 +43,6 @@ export default async function AdminDashboard() {
         </div>
       </div>
 
-      {/* Recent Orders Table */}
       <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
         <div className="px-6 py-4 border-b border-gray-200 bg-gray-50 flex justify-between items-center">
           <h2 className="text-sm font-bold uppercase tracking-widest text-charcoal">Recent Orders</h2>
@@ -55,7 +65,7 @@ export default async function AdminDashboard() {
                   <td colSpan={5} className="px-6 py-8 text-center text-slate">No orders found yet.</td>
                 </tr>
               ) : (
-                orders.slice(0, 5).map((order: any) => (
+                orders.slice(0, 5).map((order: Order) => (
                   <tr key={order._id} className="hover:bg-gray-50 transition">
                     <td className="px-6 py-4 font-medium text-charcoal truncate max-w-[120px]">{order._id}</td>
                     <td className="px-6 py-4 text-charcoal">{order.customer.name}</td>
@@ -80,5 +90,3 @@ export default async function AdminDashboard() {
     </div>
   );
 }
-
-import Link from "next/link";

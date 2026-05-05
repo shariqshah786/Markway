@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useCart } from "@/context/CartContext";
-import { useState, useRef, useEffect } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useSession, signOut } from "next-auth/react";
 
@@ -33,7 +33,6 @@ export default function Navbar() {
   const [hoveredCategory, setHoveredCategory] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
   const router = useRouter();
-  const searchInputRef = useRef<HTMLInputElement>(null);
   
   const itemCount = state.items.reduce((total, item) => total + item.quantity, 0);
 
@@ -119,7 +118,7 @@ export default function Navbar() {
               <div className="absolute right-0 top-full mt-0 w-48 bg-white shadow-2xl border border-gray-100 opacity-0 group-hover:opacity-100 pointer-events-none group-hover:pointer-events-auto transition-all py-2 z-50">
                 <div className="px-4 py-2 border-b border-gray-50 text-xs font-bold text-gray-500 uppercase tracking-widest">{session.user?.name}</div>
                 <button onClick={() => signOut()} className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-orange-600 transition">Sign Out</button>
-                { (session.user as any)?.role === 'admin' && (
+                { (session.user as { role?: string }).role === 'admin' && (
                   <Link href="/admin" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-orange-600 transition">Admin Dashboard</Link>
                 )}
               </div>

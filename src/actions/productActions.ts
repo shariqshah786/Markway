@@ -8,7 +8,11 @@ export async function getProducts(filters: { category?: string, q?: string, minP
   try {
     await dbConnect();
     
-    let query: any = {};
+    const query: {
+      category?: string;
+      name?: { $regex: string; $options: string };
+      price?: { $gte?: number; $lte?: number };
+    } = {};
     
     if (filters.category && filters.category !== "All") {
       query.category = filters.category;

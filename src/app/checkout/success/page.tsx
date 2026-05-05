@@ -10,7 +10,7 @@ export default function CheckoutSuccess({ searchParams }: { searchParams: { id: 
         <h1 className="text-4xl font-heading font-semibold text-charcoal mb-4">Thank You for Your Order</h1>
         <p className="text-slate mb-2">Order ID: <span className="font-medium text-charcoal">{searchParams.id}</span></p>
         <p className="text-slate font-light leading-relaxed mb-12">
-          Your order has been placed successfully. We've sent a confirmation email with all the details. 
+          Your order has been placed successfully. We&apos;ve sent a confirmation email with all the details. 
           Your journey with Markway has officially begun.
         </p>
         

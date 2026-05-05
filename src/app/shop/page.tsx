@@ -58,7 +58,7 @@ export default async function Shop({
               </div>
             ) : (
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-16">
-                {products.map((product: any) => (
+                {products.map((product: { _id: string; name: string; price: number; category: string; images: string[]; slug: string }) => (
                   <ProductCard key={product._id} product={product} />
                 ))}
               </div>

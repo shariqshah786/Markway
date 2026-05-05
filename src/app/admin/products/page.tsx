@@ -1,8 +1,18 @@
 import { getProducts, deleteProduct } from "@/actions/productActions";
 import AddProductForm from "@/components/AddProductForm";
 
+interface ProductType {
+  _id: string;
+  name: string;
+  slug: string;
+  price: number;
+  category: string;
+  stock: number;
+  images: string[];
+}
+
 export default async function AdminProducts() {
-  const products = await getProducts();
+  const products: ProductType[] = await getProducts();
 
   return (
     <div>
@@ -39,7 +49,7 @@ export default async function AdminProducts() {
                   </td>
                 </tr>
               ) : (
-                products.map((product: any) => (
+                products.map((product: ProductType) => (
                   <tr key={product._id} className="hover:bg-gray-50 transition">
                     <td className="px-6 py-4 font-medium text-charcoal flex items-center gap-4">
                       <div className={`w-12 h-16 rounded overflow-hidden relative ${product.images?.[0]?.includes('bg-') ? product.images[0] : ''}`}>
@@ -61,7 +71,10 @@ export default async function AdminProducts() {
                       </div>
                     </td>
                     <td className="px-6 py-4 text-right space-x-4">
-                      <form action={deleteProduct.bind(null, product._id.toString())} className="inline">
+                      <form action={async () => {
+                        "use server";
+                        await deleteProduct(product._id.toString());
+                      }} className="inline">
                         <button type="submit" className="text-xs font-bold uppercase tracking-widest text-red-500 hover:text-red-700 transition">Delete</button>
                       </form>
                     </td>

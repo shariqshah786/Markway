@@ -1,7 +1,21 @@
 import { getOrders } from "@/actions/orderActions";
 
+interface OrderType {
+  _id: string;
+  customer: {
+    name: string;
+    email: string;
+  };
+  items: Array<{
+    quantity: number;
+  }>;
+  totalAmount: number;
+  status: string;
+  createdAt: string;
+}
+
 export default async function AdminOrders() {
-  const orders = await getOrders();
+  const orders: OrderType[] = await getOrders();
 
   return (
     <div>
@@ -26,7 +40,7 @@ export default async function AdminOrders() {
                   <td colSpan={6} className="px-6 py-8 text-center text-slate">No orders placed yet.</td>
                 </tr>
               ) : (
-                orders.map((order: any) => (
+                orders.map((order: OrderType) => (
                   <tr key={order._id} className="hover:bg-gray-50 transition">
                     <td className="px-6 py-4 font-medium text-charcoal truncate max-w-[120px]">{order._id}</td>
                     <td className="px-6 py-4">
@@ -35,7 +49,7 @@ export default async function AdminOrders() {
                     </td>
                     <td className="px-6 py-4 text-slate">{new Date(order.createdAt).toLocaleDateString()}</td>
                     <td className="px-6 py-4 text-charcoal">
-                      {order.items.reduce((acc: number, item: any) => acc + item.quantity, 0)} items
+                      {order.items.reduce((acc: number, item: { quantity: number }) => acc + item.quantity, 0)} items
                     </td>
                     <td className="px-6 py-4 font-medium text-charcoal">₹{order.totalAmount.toLocaleString()}</td>
                     <td className="px-6 py-4">

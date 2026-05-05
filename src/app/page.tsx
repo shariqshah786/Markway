@@ -120,7 +120,7 @@ export default async function Home() {
           </div>
         </div>
         <div className="flex gap-10 px-[5vw] overflow-x-auto no-scrollbar pb-10">
-          {bestSellers.map((product: any) => (
+          {bestSellers.map((product: { _id: string; name: string; price: number; category: string; images: string[]; slug: string }) => (
             <div key={product._id} className="min-w-[320px] md:min-w-[400px]">
               <ProductCard product={product} />
             </div>
