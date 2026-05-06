@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
+import Image from "next/image";
 
 const slides = [
   {
@@ -37,16 +38,18 @@ export default function HeroSlider() {
 
   return (
     <section className="relative h-[85vh] min-h-[600px] w-full overflow-hidden group">
-      <div 
-        className="hero-slider h-full w-[300%]" 
+      <div
+        className="hero-slider h-full w-[300%]"
         style={{ transform: `translateX(-${(current * 100) / 3}%)` }}
       >
         {slides.map((slide, idx) => (
           <div key={idx} className="w-1/3 h-full relative">
-            <img 
-              src={slide.image} 
-              alt={slide.title} 
-              className="w-full h-full object-cover" 
+            <Image
+              src={slide.image}
+              alt={slide.title}
+              width={1920}
+              height={1080}
+              className="w-full h-full object-cover"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
             <div className="absolute top-12 right-12">
@@ -71,22 +74,21 @@ export default function HeroSlider() {
       {/* Slider Navigation Dots */}
       <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex gap-4 z-20">
         {slides.map((_, idx) => (
-          <button 
+          <button
             key={idx}
             onClick={() => setCurrent(idx)}
-            className={`slider-dot w-2 h-2 rounded-full border border-white/50 transition-all duration-500 ${
-              current === idx ? 'bg-white scale-150 w-6 border-white' : 'bg-white/20'
-            }`}
+            className={`slider-dot w-2 h-2 rounded-full border border-white/50 transition-all duration-500 ${current === idx ? 'bg-white scale-150 w-6 border-white' : 'bg-white/20'
+              }`}
           ></button>
         ))}
       </div>
-      
+
       {/* Side Navigation Buttons (Desktop) */}
       <div className="absolute inset-y-0 left-0 flex items-center px-6 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-         <button onClick={() => setCurrent(prev => (prev - 1 + slides.length) % slides.length)} className="w-12 h-12 rounded-full border border-white/30 text-white flex items-center justify-center hover:bg-white hover:text-charcoal transition-all backdrop-blur-sm">←</button>
+        <button onClick={() => setCurrent(prev => (prev - 1 + slides.length) % slides.length)} className="w-12 h-12 rounded-full border border-white/30 text-white flex items-center justify-center hover:bg-white hover:text-charcoal transition-all backdrop-blur-sm">←</button>
       </div>
       <div className="absolute inset-y-0 right-0 flex items-center px-6 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-         <button onClick={nextSlide} className="w-12 h-12 rounded-full border border-white/30 text-white flex items-center justify-center hover:bg-white hover:text-charcoal transition-all backdrop-blur-sm">→</button>
+        <button onClick={nextSlide} className="w-12 h-12 rounded-full border border-white/30 text-white flex items-center justify-center hover:bg-white hover:text-charcoal transition-all backdrop-blur-sm">→</button>
       </div>
     </section>
   );

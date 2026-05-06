@@ -3,6 +3,7 @@
 import dbConnect from "@/lib/mongodb";
 import Order from "@/models/Order";
 import { revalidatePath } from "next/cache";
+import { sendOrderEmail } from "@/lib/email";
 
 export async function createOrder(orderData: { customer: { name: string, email: string, phone: string, address: { street: string, city: string, state: string, country: string, zip: string } }, items: Array<{ id: string, name: string, price: number, quantity: number, color?: string }>, totalAmount: number, paymentMethod?: string }) {
   try {
@@ -23,7 +24,7 @@ export async function createOrder(orderData: { customer: { name: string, email: 
         color: item.color,
       })),
       totalAmount: orderData.totalAmount,
-      status: "Processing",
+      status: "Order Created Successfully",
       paymentMethod: orderData.paymentMethod || "Stripe",
       paymentStatus: "Paid", // For this demo, assuming payment is successful
     });
@@ -32,6 +33,17 @@ export async function createOrder(orderData: { customer: { name: string, email: 
     
     revalidatePath("/admin/orders");
     revalidatePath("/admin"); // For dashboard stats
+    
+    // Send order creation email
+    const emailSubject = `Order Confirmation - ${savedOrder._id}`;
+    const emailHtml = `
+      <h1>Thank you for your order!</h1>
+      <p>Your order has been created successfully.</p>
+      <p>Order ID: ${savedOrder._id}</p>
+      <p>Total Amount: ₹${savedOrder.totalAmount}</p>
+      <p>We will notify you when your order is preparing and shipped.</p>
+    `;
+    await sendOrderEmail(savedOrder.customer.email, emailSubject, emailHtml);
     
     return { success: true, orderId: savedOrder._id.toString() };
   } catch (error) {
@@ -47,6 +59,37 @@ export async function getOrders() {
     return JSON.parse(JSON.stringify(orders));
   } catch (error) {
     console.error("Error fetching orders:", error);
-    throw new Error("Failed to fetch orders");
+    return [];
+  }
+}
+
+export async function updateOrderStatus(orderId: string, status: string) {
+  try {
+    await dbConnect();
+    const updatedOrder = await Order.findByIdAndUpdate(
+      orderId,
+      { status },
+      { new: true }
+    );
+    
+    if (!updatedOrder) {
+      return { success: false, error: "Order not found" };
+    }
+    
+    revalidatePath("/admin/orders");
+    
+    // Send email on status update
+    const emailSubject = `Order Update - ${updatedOrder._id}`;
+    const emailHtml = `
+      <h1>Your Order Status Updated</h1>
+      <p>Your order (ID: ${updatedOrder._id}) status has been updated to: <strong>${status}</strong></p>
+      <p>Thank you for shopping with us!</p>
+    `;
+    await sendOrderEmail(updatedOrder.customer.email, emailSubject, emailHtml);
+    
+    return { success: true };
+  } catch (error) {
+    console.error("Error updating order status:", error);
+    return { success: false, error: "Failed to update order status" };
   }
 }

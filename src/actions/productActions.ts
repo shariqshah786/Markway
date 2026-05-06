@@ -32,7 +32,7 @@ export async function getProducts(filters: { category?: string, q?: string, minP
     return JSON.parse(JSON.stringify(products));
   } catch (error) {
     console.error("Error fetching products:", error);
-    throw new Error("Failed to fetch products");
+    return [];
   }
 }
 

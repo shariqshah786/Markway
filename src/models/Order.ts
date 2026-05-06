@@ -26,8 +26,8 @@ const OrderSchema = new Schema(
     totalAmount: { type: Number, required: true },
     status: {
       type: String,
-      enum: ["Processing", "Shipped", "Delivered", "Cancelled"],
-      default: "Processing",
+      enum: ["Order Created Successfully", "Preparing", "Completed", "Delivered Successfully", "Cancelled"],
+      default: "Order Created Successfully",
     },
     paymentMethod: { type: String, default: "Stripe" },
     paymentStatus: { type: String, default: "Pending" },

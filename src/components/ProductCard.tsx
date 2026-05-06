@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useCart } from "@/context/CartContext";
 import { useState } from "react";
 
@@ -38,16 +39,16 @@ export default function ProductCard({ product }: { product: Product }) {
       <div className="relative h-[400px] w-full bg-gray-200 mb-6 overflow-hidden">
         {product.images?.[0] ? (
           product.images[0].startsWith('data:') || product.images[0].startsWith('/') ? (
-            <img src={product.images[0]} alt={product.name} className="w-full h-full object-cover transition duration-700 group-hover:scale-105" />
+            <Image src={product.images[0]} alt={product.name} width={600} height={800} className="w-full h-full object-cover transition duration-700 group-hover:scale-105" />
           ) : (
-             <div className={`absolute inset-0 ${product.images[0]} mix-blend-multiply`}></div>
+            <div className={`absolute inset-0 ${product.images[0]} mix-blend-multiply`}></div>
           )
         ) : (
           <div className="absolute inset-0 bg-slate-400 mix-blend-multiply"></div>
         )}
         <div className="absolute inset-0 bg-black/5 group-hover:bg-transparent transition duration-500"></div>
         <div className="absolute inset-0 flex items-end justify-center pb-6 opacity-0 group-hover:opacity-100 transition duration-500 bg-gradient-to-t from-black/40 to-transparent">
-          <button 
+          <button
             onClick={handleQuickAdd}
             disabled={adding}
             className="bg-white text-charcoal px-8 py-3 text-xs font-bold uppercase tracking-widest hover:bg-gold hover:text-white transition shadow-lg transform translate-y-4 group-hover:translate-y-0 disabled:opacity-50"

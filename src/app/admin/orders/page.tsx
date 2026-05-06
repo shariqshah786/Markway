@@ -1,4 +1,7 @@
 import { getOrders } from "@/actions/orderActions";
+import OrderStatusSelector from "./OrderStatusSelector";
+
+export const dynamic = 'force-dynamic';
 
 interface OrderType {
   _id: string;
@@ -53,13 +56,7 @@ export default async function AdminOrders() {
                     </td>
                     <td className="px-6 py-4 font-medium text-charcoal">₹{order.totalAmount.toLocaleString()}</td>
                     <td className="px-6 py-4">
-                      <span className={`px-3 py-1 rounded-full text-xs font-medium ${
-                        order.status === 'Delivered' ? 'bg-green-100 text-green-800' : 
-                        order.status === 'Shipped' ? 'bg-blue-100 text-blue-800' : 
-                        'bg-yellow-100 text-yellow-800'
-                      }`}>
-                        {order.status}
-                      </span>
+                      <OrderStatusSelector orderId={order._id} currentStatus={order.status} />
                     </td>
                   </tr>
                 ))

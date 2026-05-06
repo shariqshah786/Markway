@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef } from "react";
+import Image from "next/image";
 import { createProduct } from "@/actions/productActions";
 
 export default function AddProductForm() {
@@ -110,9 +111,9 @@ export default function AddProductForm() {
                 <div className="grid grid-cols-4 gap-3">
                   {imagePreviews.map((preview, idx) => (
                     <div key={idx} className="relative group aspect-[3/4]">
-                      <img src={preview} alt={`Preview ${idx}`} className="h-full w-full object-cover rounded-md border border-gray-200" />
-                      <button 
-                        type="button" 
+                      <Image src={preview} alt={`Preview ${idx}`} width={200} height={200} className="h-full w-full object-cover rounded-md border border-gray-200" />
+                      <button
+                        type="button"
                         onClick={() => removeImage(idx)}
                         className="absolute -top-1 -right-1 bg-red-500 text-white rounded-full p-1 opacity-0 group-hover:opacity-100 transition shadow-md"
                       >
@@ -124,10 +125,10 @@ export default function AddProductForm() {
               )}
             </div>
           </div>
-          
+
           <div className="pt-4">
-            <button 
-              type="submit" 
+            <button
+              type="submit"
               disabled={isSubmitting}
               className="w-full bg-charcoal text-white px-6 py-5 text-sm font-bold uppercase tracking-[0.2em] hover:bg-gold transition shadow-xl disabled:opacity-50"
             >

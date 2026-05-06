@@ -2,6 +2,8 @@ import { getOrders } from "@/actions/orderActions";
 import { getProducts } from "@/actions/productActions";
 import Link from "next/link";
 
+export const dynamic = 'force-dynamic';
+
 interface Order {
   _id: string;
   customer: {

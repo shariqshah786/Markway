@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { getProducts } from "@/actions/productActions";
 import ProductCard from "@/components/ProductCard";
 import HeroSlider from "@/components/HeroSlider";
@@ -9,7 +10,7 @@ export default async function Home() {
 
   return (
     <main className="min-h-screen bg-background">
-      
+
       {/* Hero Slider Section */}
       <HeroSlider />
 
@@ -27,9 +28,9 @@ export default async function Home() {
             </div>
           </div>
           <div className="flex flex-wrap justify-center items-center gap-16 grayscale opacity-40 hover:grayscale-0 hover:opacity-100 transition-all duration-700">
-             <span className="text-2xl font-black tracking-tighter text-charcoal">AMAZON</span>
-             <span className="text-2xl font-black tracking-tighter text-charcoal">FLIPKART</span>
-             <span className="text-2xl font-black tracking-tighter text-charcoal">MYNTRA</span>
+            <span className="text-2xl font-black tracking-tighter text-charcoal">AMAZON</span>
+            <span className="text-2xl font-black tracking-tighter text-charcoal">FLIPKART</span>
+            <span className="text-2xl font-black tracking-tighter text-charcoal">MYNTRA</span>
           </div>
         </div>
       </section>
@@ -37,9 +38,9 @@ export default async function Home() {
       {/* Marquee */}
       <div className="bg-primary text-on-primary py-5 marquee border-y border-white/10">
         <div className="marquee-content font-bold uppercase tracking-[0.3em] text-[10px]">
-          <span className="mx-12">Premium Quality</span> • <span className="mx-12">Lifetime Warranty</span> • <span className="mx-12">500,000+ Happy Travelers</span> • 
+          <span className="mx-12">Premium Quality</span> • <span className="mx-12">Lifetime Warranty</span> • <span className="mx-12">500,000+ Happy Travelers</span> •
           <span className="mx-12">Global Shipping</span> • <span className="mx-12">Japanese Engineering</span> • <span className="mx-12">Eco-Friendly Materials</span> •
-          <span className="mx-12">Premium Quality</span> • <span className="mx-12">Lifetime Warranty</span> • <span className="mx-12">500,000+ Happy Travelers</span> • 
+          <span className="mx-12">Premium Quality</span> • <span className="mx-12">Lifetime Warranty</span> • <span className="mx-12">500,000+ Happy Travelers</span> •
         </div>
       </div>
 
@@ -54,7 +55,7 @@ export default async function Home() {
             View All Collections →
           </Link>
         </div>
-        
+
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {[
             { name: "Hardshell", desc: "Durable. Refined.", img: "https://lh3.googleusercontent.com/aida-public/AB6AXuD88xKvZFowa3SZKQ3JuijXzB248JXB1cMixvROVXElVAkZutH18yB-erVhZw1wLJ_tWiDViMgLYbp-Mf3dWAB6KoYjm6lzO0FVVTI14fzNLz_nVczsPvNGQLIjIxziFIJ_0dMLa-EYBoP8Bfjt2MDZxliKIO8FRwO5g6QdWwtp2ZJUVLwSUwlOpWYyOsvs6cgk-TUupGDYI52Ag1tj9HpiOg3wpSGKgdBYqEZ_j5Tgw4efRWE5YIHqUTxx6iC09MiF49JHJfhTyZP1" },
@@ -64,7 +65,7 @@ export default async function Home() {
           ].map((item, idx) => (
             <Link href={`/shop?category=${item.name}`} key={idx} className="group cursor-pointer">
               <div className="relative aspect-[4/5] overflow-hidden mb-6 rounded-none">
-                <img src={item.img} alt={item.name} className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" />
+                <Image src={item.img} alt={item.name} width={600} height={800} className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" />
                 <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-500"></div>
               </div>
               <h3 className="font-headline text-xl uppercase tracking-wider text-charcoal mb-1">{item.name}</h3>
@@ -138,10 +139,10 @@ export default async function Home() {
           <h2 className="font-headline text-4xl md:text-5xl mb-8 leading-tight">10% off your first journey</h2>
           <p className="text-slate text-sm font-light mb-12 max-w-lg mx-auto">Join the Markway Inner Circle for early access to collections and travel insights.</p>
           <form className="flex flex-col sm:flex-row gap-6 max-w-lg mx-auto">
-            <input 
-              className="flex-grow bg-transparent border-b border-white/20 py-4 px-2 focus:outline-none focus:border-gold text-white placeholder-gray-500 transition-all font-light" 
-              placeholder="Email Address" 
-              type="email" 
+            <input
+              className="flex-grow bg-transparent border-b border-white/20 py-4 px-2 focus:outline-none focus:border-gold text-white placeholder-gray-500 transition-all font-light"
+              placeholder="Email Address"
+              type="email"
             />
             <button className="h-14 px-10 bg-white text-charcoal font-bold uppercase tracking-widest text-[11px] hover:bg-gold hover:text-white transition-all duration-500">
               Subscribe

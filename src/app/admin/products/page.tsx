@@ -1,6 +1,8 @@
 import { getProducts, deleteProduct } from "@/actions/productActions";
+import Image from "next/image";
 import AddProductForm from "@/components/AddProductForm";
 
+export const dynamic = 'force-dynamic';
 interface ProductType {
   _id: string;
   name: string;
@@ -54,7 +56,7 @@ export default async function AdminProducts() {
                     <td className="px-6 py-4 font-medium text-charcoal flex items-center gap-4">
                       <div className={`w-12 h-16 rounded overflow-hidden relative ${product.images?.[0]?.includes('bg-') ? product.images[0] : ''}`}>
                         {!product.images?.[0]?.includes('bg-') && product.images?.[0] && (
-                           <img src={product.images[0]} alt={product.name} className="w-full h-full object-cover" />
+                          <Image src={product.images[0]} alt={product.name} width={100} height={100} className="w-full h-full object-cover" />
                         )}
                       </div>
                       <div className="flex flex-col">
